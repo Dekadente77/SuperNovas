@@ -1,0 +1,15 @@
+@font-face {
+  font-family: lemon;
+  src: url("../fonts/lemon.ttf") format("truetype");
+}
+
+body {
+  font-family: lemon;
+  font-size: calc(12px + 3vmin);
+  line-height: calc(12px + 1vmin);
+}
+
+a {
+  color: #78ccff;
+  text-decoration: none;
+}

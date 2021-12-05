@@ -1,0 +1,26 @@
+.Factory {
+  text-align: center;
+  text-align-last: justify;
+  line-height: calc(12px + 1.5vmin);
+}
+
+.Factory-logo {
+  height: 10vmin;
+  pointer-events: none;
+}
+
+.Factory-header {
+  background-color: #ffffff;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(12px + 2vmin);
+  color: #12173d;
+}
+
+.Kanban {
+  height: 2vmin;
+}

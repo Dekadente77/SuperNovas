@@ -1,0 +1,12 @@
+.Text {
+  text-align: center;
+  font-size: calc(12px + 2vmin);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.Text ul {
+  text-align: center;
+  list-style-position: inside;
+}
