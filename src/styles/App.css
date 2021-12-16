@@ -9,6 +9,8 @@
 
 .App-header {
   background-color: #407c84;
+  background-image: url("../images/background.gif");
+  background-size: cover;
   padding-top: 10vh;
   display: flex;
   flex-direction: column;
