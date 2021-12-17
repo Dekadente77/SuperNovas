@@ -1120,6 +1120,8 @@ const styleClaim = {
 
 const styleBuy = {
     backgroundColor: '#e8844f',
+	top: '-1500px',
+    position: 'relative',
     color: '#000000',
     fontSize: 'calc(12px + 2vmin)',
     fontFamily: 'lemon',
@@ -1497,7 +1499,7 @@ class ClaimButtons extends React.Component {
                  }
              </div>
         </div>
-        <div className="App">
+        <div className="App" >
     
           <form noValidate autoComplete="off">
              

@@ -7,9 +7,14 @@ body {
   font-family: lemon;
   font-size: calc(12px + 3vmin);
   line-height: calc(12px + 1vmin);
+  height: 100%;
 }
 
 a {
   color: #78ccff;
   text-decoration: none;
+}
+
+html,header {
+  height: 100%;
 }
