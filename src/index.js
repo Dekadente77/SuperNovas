@@ -8,13 +8,18 @@ import ClaimButtons from './components/ClaimButtons';
 import DystoTable from './components/DystoTable'
 import DystoTraits from './components/DystoTraits'
 import Text from './components/Text';
+import Home from './components/Home';
 import Roadmap from './components/Roadmap';
 import Footer from './components/Footer';
+import Team from './components/Team';
 
 ReactDOM.render(
   <React.StrictMode>
     <App />
     <ClaimButtons />
+    <Home />
+    <Roadmap />
+    <Team />
     <Footer />
   </React.StrictMode>,
   document.getElementById('root')

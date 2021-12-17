@@ -24,7 +24,7 @@ function Footer() {
         <p style={{color: '#FFFFFF'}}>
         <a href="https://discord.gg/DystoPunks" target="_blank" rel="noopener noreferrer"><b>Discord</b></a> | <a href="https://twitter.com/DystoPunks" target="_blank" rel="noopener noreferrer"><b>Twitter</b></a>
         <br/>
-        <b style={{color: '#e8844f'}}>© 2021 SuperNova</b><br/><br/>
+        <b style={{color: '#f17123'}}>© 2021 SuperNova</b><br/><br/>
         </p>
     </div>
     </Container>

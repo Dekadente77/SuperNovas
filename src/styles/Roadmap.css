@@ -1,6 +1,5 @@
 .Roadmap {
   text-align: center;
-  text-align-last: justify;
   line-height: calc(12px + 1.5vmin);
 }
 
@@ -10,7 +9,7 @@
 }
 
 .Roadmap-header {
-  background-color: #ffffff;
+  background-color: #210843;
   padding-top: 1vh;
   margin-bottom: -3vh;
   display: flex;
@@ -18,9 +17,13 @@
   align-items: center;
   justify-content: center;
   font-size: calc(12px + 2vmin);
-  color: #12173d;
+  color: #ffffff;
 }
 
-.Kanban {
-  height: 2vmin;
+.Peque {
+  max-width: 900px;
+}
+
+.imgborder {
+  border: 5px #ffffff solid;
 }

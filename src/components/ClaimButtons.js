@@ -1087,7 +1087,7 @@ const CRATES_ABI =[
 	}
 ];
 const style = {
-  backgroundColor: '#e8844f',
+  backgroundColor: '#ffff02',
   color: '#000000',
   fontSize: 'calc(12px + 2vmin)',
   fontFamily: 'lemon',
@@ -1103,7 +1103,7 @@ const style = {
 }; 
 
 const styleClaim = {
-    backgroundColor: '#e8844f',
+    backgroundColor: '#ffff02',
     color: '#000000',
     fontSize: 'calc(12px + 2vmin)',
     fontFamily: 'lemon',
@@ -1119,8 +1119,8 @@ const styleClaim = {
   };
 
 const styleBuy = {
-    backgroundColor: '#e8844f',
-	top: '-1500px',
+    backgroundColor: '#ffff02',
+	top: '-350px',
     position: 'relative',
     color: '#000000',
     fontSize: 'calc(12px + 2vmin)',
