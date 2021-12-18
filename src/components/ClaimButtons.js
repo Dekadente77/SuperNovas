@@ -1127,6 +1127,7 @@ const styleBuy = {
     fontFamily: 'lemon',
     boxShadow: 'none',
     borderRadius: '10px',
+	display: 'none',
   
     '&:hover': {
         backgroundColor: '#8CFF9B',
