@@ -24,7 +24,7 @@ function Footer() {
         <p style={{color: '#FFFFFF'}}>
         <a href="https://discord.gg/QmTKkBCB" target="_blank" rel="noopener noreferrer"><b>Discord</b></a> | <a href="https://twitter.com/Supernovas_NFT" target="_blank" rel="noopener noreferrer"><b>Twitter</b></a>
         <br/>
-        <b style={{color: '#f17123'}}>© 2021 SuperNova</b><br/><br/>
+        <b style={{color: '#f17123'}}>© 2021 SuperNovas</b><br/><br/>
         </p>
     </div>
     </Container>
