@@ -1510,7 +1510,7 @@ class ClaimButtons extends React.Component {
                  ) :
                   <div><br/>
                   <Button style={styleBuy} variant="contained" size="large" onClick={() => this.handleClick()}><b>Mint SuperNovas</b></Button>&nbsp;
-				  <TextField style={{maxWidth: "100px"}} inputProps={{ style: { color: "#fff" } }} variant="filled" onChange={this.updateInput} defaultValue={this.state.defaultValue}  margin="dense" size="small" requiered="true" type="number"/>
+				  <TextField style={{maxWidth: "100px"}} inputProps={{ style: { color: "#fff", display: "none" } }} variant="filled" onChange={this.updateInput} defaultValue={this.state.defaultValue}  margin="dense" size="small" requiered="true" type="number"/>
                   </div>
               } 
 			  <br/><br/>
