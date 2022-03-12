@@ -21,8 +21,10 @@
 
 .Peque {
   max-width: 900px;
+  text-align: center;
+  margin: auto;
 }
 
 .imgborder {
-  border: 5px #ffffff solid;
+  border: 5px #181616 solid;
 }

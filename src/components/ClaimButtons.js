@@ -11,11 +11,16 @@ const Web3 = require('web3');
 
 // MAINNET
 //const OPENSEA_WEB = "https://opensea.io/assets/0xbEA8123277142dE42571f1fAc045225a1D347977/";
-const NFT_CONTRACT_ADDRESS = "0xc13F4F0F865bAc08F62654B57E38669EbC4747a3";
-const CRATES_CONTRACT_ADDRESS = "0xC50F11281b0821E5a9AD3DD77C33Eaf82d3094f4";
+const NFT_CONTRACT_ADDRESS = "0x1a30C93f924dFF2D5ed41641fc04601F38accD2D";
 const NFT_ABI =[
 	{
-		"inputs": [],
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "baseTokenURI",
+				"type": "string"
+			}
+		],
 		"stateMutability": "nonpayable",
 		"type": "constructor"
 	},
@@ -31,13 +36,13 @@ const NFT_ABI =[
 			{
 				"indexed": true,
 				"internalType": "address",
-				"name": "spender",
+				"name": "approved",
 				"type": "address"
 			},
 			{
-				"indexed": false,
+				"indexed": true,
 				"internalType": "uint256",
-				"name": "value",
+				"name": "tokenId",
 				"type": "uint256"
 			}
 		],
@@ -50,538 +55,7 @@ const NFT_ABI =[
 			{
 				"indexed": true,
 				"internalType": "address",
-				"name": "previousOwner",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "newOwner",
-				"type": "address"
-			}
-		],
-		"name": "OwnershipTransferred",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "from",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "to",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "value",
-				"type": "uint256"
-			}
-		],
-		"name": "Transfer",
-		"type": "event"
-	},
-	{
-		"inputs": [],
-		"name": "BASE_RATE",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "DystoAddress",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "END",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "INITIAL_ISSUANCE",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "MAX_CLAIM",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "START",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
 				"name": "owner",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "spender",
-				"type": "address"
-			}
-		],
-		"name": "allowance",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "spender",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			}
-		],
-		"name": "approve",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "account",
-				"type": "address"
-			}
-		],
-		"name": "balanceOf",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			}
-		],
-		"name": "burn",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "account",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			}
-		],
-		"name": "burnFrom",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "claim",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "decimals",
-		"outputs": [
-			{
-				"internalType": "uint8",
-				"name": "",
-				"type": "uint8"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "spender",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "subtractedValue",
-				"type": "uint256"
-			}
-		],
-		"name": "decreaseAllowance",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "spender",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "addedValue",
-				"type": "uint256"
-			}
-		],
-		"name": "increaseAllowance",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "lastUpdate",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "name",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "owner",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "punkid",
-				"type": "uint256"
-			}
-		],
-		"name": "punkCreds",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "renounceOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "to",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			}
-		],
-		"name": "reservedCreds",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "saleIsActive",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "bool",
-				"name": "newState",
-				"type": "bool"
-			}
-		],
-		"name": "setSaleState",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "symbol",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "ownwer",
-				"type": "address"
-			}
-		],
-		"name": "totalAvailable",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "totalSupply",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "recipient",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			}
-		],
-		"name": "transfer",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "sender",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "recipient",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			}
-		],
-		"name": "transferFrom",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "newOwner",
-				"type": "address"
-			}
-		],
-		"name": "transferOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "unclaimedCreds",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	}
-];
-
-
-const CRATES_ABI =[
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "account",
 				"type": "address"
 			},
 			{
@@ -601,6 +75,57 @@ const CRATES_ABI =[
 		"type": "event"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "approve",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "numSuperNovas",
+				"type": "uint256"
+			}
+		],
+		"name": "getSuperNovas",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint8",
+				"name": "numSuperNovas",
+				"type": "uint8"
+			}
+		],
+		"name": "mintAllowList",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "mintFreeList",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -620,107 +145,15 @@ const CRATES_ABI =[
 		"type": "event"
 	},
 	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "operator",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "from",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "to",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256[]",
-				"name": "ids",
-				"type": "uint256[]"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256[]",
-				"name": "values",
-				"type": "uint256[]"
-			}
-		],
-		"name": "TransferBatch",
-		"type": "event"
+		"inputs": [],
+		"name": "pausePrivateSale",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
 	},
 	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "operator",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "from",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "to",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "id",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "value",
-				"type": "uint256"
-			}
-		],
-		"name": "TransferSingle",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "value",
-				"type": "string"
-			},
-			{
-				"indexed": true,
-				"internalType": "uint256",
-				"name": "id",
-				"type": "uint256"
-			}
-		],
-		"name": "URI",
-		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "numberOfTokens",
-				"type": "uint256"
-			}
-		],
-		"name": "mint",
+		"inputs": [],
+		"name": "pauseSale",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -735,32 +168,12 @@ const CRATES_ABI =[
 	{
 		"inputs": [
 			{
-				"internalType": "address",
-				"name": "from",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "to",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256[]",
-				"name": "ids",
-				"type": "uint256[]"
-			},
-			{
-				"internalType": "uint256[]",
-				"name": "amounts",
-				"type": "uint256[]"
-			},
-			{
-				"internalType": "bytes",
-				"name": "data",
-				"type": "bytes"
+				"internalType": "uint256",
+				"name": "numSuperNovas",
+				"type": "uint256"
 			}
 		],
-		"name": "safeBatchTransferFrom",
+		"name": "reserveAirdrop",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -779,21 +192,52 @@ const CRATES_ABI =[
 			},
 			{
 				"internalType": "uint256",
-				"name": "id",
+				"name": "tokenId",
 				"type": "uint256"
+			}
+		],
+		"name": "safeTransferFrom",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
 			},
 			{
 				"internalType": "uint256",
-				"name": "amount",
+				"name": "tokenId",
 				"type": "uint256"
 			},
 			{
 				"internalType": "bytes",
-				"name": "data",
+				"name": "_data",
 				"type": "bytes"
 			}
 		],
 		"name": "safeTransferFrom",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address[]",
+				"name": "addresses",
+				"type": "address[]"
+			}
+		],
+		"name": "setAllowList",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -819,12 +263,87 @@ const CRATES_ABI =[
 	{
 		"inputs": [
 			{
-				"internalType": "bool",
-				"name": "newState",
-				"type": "bool"
+				"internalType": "string",
+				"name": "baseURI",
+				"type": "string"
 			}
 		],
-		"name": "setSaleState",
+		"name": "setBaseURI",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address[]",
+				"name": "addresses",
+				"type": "address[]"
+			}
+		],
+		"name": "setFreeList",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "startPrivateSale",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "startSale",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "Transfer",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "transferFrom",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -843,27 +362,18 @@ const CRATES_ABI =[
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "uri",
-				"type": "string"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
+		"inputs": [],
+		"name": "withdrawAll",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
 	},
 	{
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "account",
+				"name": "owner",
 				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "id",
-				"type": "uint256"
 			}
 		],
 		"name": "balanceOf",
@@ -880,75 +390,38 @@ const CRATES_ABI =[
 	{
 		"inputs": [
 			{
-				"internalType": "address[]",
-				"name": "accounts",
-				"type": "address[]"
-			},
-			{
-				"internalType": "uint256[]",
-				"name": "ids",
-				"type": "uint256[]"
-			}
-		],
-		"name": "balanceOfBatch",
-		"outputs": [
-			{
-				"internalType": "uint256[]",
-				"name": "",
-				"type": "uint256[]"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "BurnAddress",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "CredsAddress",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "DystoAddress",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
 				"internalType": "uint256",
-				"name": "id",
+				"name": "tokenId",
 				"type": "uint256"
 			}
 		],
-		"name": "exists",
+		"name": "getApproved",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "hasPrivateSaleStarted",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "hasSaleStarted",
 		"outputs": [
 			{
 				"internalType": "bool",
@@ -963,7 +436,7 @@ const CRATES_ABI =[
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "account",
+				"name": "owner",
 				"type": "address"
 			},
 			{
@@ -985,6 +458,83 @@ const CRATES_ABI =[
 	},
 	{
 		"inputs": [],
+		"name": "MAX_GIRLS",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "minted",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "name",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "addr",
+				"type": "address"
+			}
+		],
+		"name": "numAllowMint",
+		"outputs": [
+			{
+				"internalType": "uint8",
+				"name": "",
+				"type": "uint8"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "addr",
+				"type": "address"
+			}
+		],
+		"name": "numFreeMint",
+		"outputs": [
+			{
+				"internalType": "uint8",
+				"name": "",
+				"type": "uint8"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
 		"name": "owner",
 		"outputs": [
 			{
@@ -997,13 +547,19 @@ const CRATES_ABI =[
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "saleIsActive",
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "ownerOf",
 		"outputs": [
 			{
-				"internalType": "bool",
+				"internalType": "address",
 				"name": "",
-				"type": "bool"
+				"type": "address"
 			}
 		],
 		"stateMutability": "view",
@@ -1029,19 +585,13 @@ const CRATES_ABI =[
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "ownwer",
-				"type": "address"
-			}
-		],
-		"name": "totalAvailable",
+		"inputs": [],
+		"name": "symbol",
 		"outputs": [
 			{
-				"internalType": "uint256",
+				"internalType": "string",
 				"name": "",
-				"type": "uint256"
+				"type": "string"
 			}
 		],
 		"stateMutability": "view",
@@ -1051,30 +601,11 @@ const CRATES_ABI =[
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "id",
+				"name": "_tokenId",
 				"type": "uint256"
 			}
 		],
-		"name": "totalSupply",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "uri",
+		"name": "tokenURI",
 		"outputs": [
 			{
 				"internalType": "string",
@@ -1086,6 +617,7 @@ const CRATES_ABI =[
 		"type": "function"
 	}
 ];
+
 const style = {
   backgroundColor: '#ffff02',
   color: '#000000',
@@ -1120,14 +652,13 @@ const styleClaim = {
 
 const styleBuy = {
     backgroundColor: '#ffff02',
-	top: '-350px',
+	
     position: 'relative',
     color: '#000000',
     fontSize: 'calc(12px + 2vmin)',
     fontFamily: 'lemon',
     boxShadow: 'none',
     borderRadius: '10px',
-	display: 'none',
   
     '&:hover': {
         backgroundColor: '#8CFF9B',
@@ -1148,14 +679,16 @@ class ClaimButtons extends React.Component {
 
     this.state = {
       currentAccount: null,
-      totalAllowance: 0,
+      numFreeMint: 0,
+	  numAllowMint: 0,
       isSendingTransaction: false,
       purchaseNumber: "1",
       hasSaleStarted: false,
+	  hasPrivateSaleStarted: false,
       isMainnet: true,
       statusString: null,
       defaultValue: 1,
-      isAuthClaim: 0,
+      minted: 0,
     }
     this.textInput = {value: 1};
     this.updateInput = this.updateInput.bind(this);
@@ -1164,15 +697,15 @@ class ClaimButtons extends React.Component {
 
 
   async handleClick() {
-    await this.buyCrates(CRATES_CONTRACT_ADDRESS, CRATES_ABI,this.textInput.value);
+    await this.getSuperNovas(NFT_CONTRACT_ADDRESS, NFT_ABI,this.textInput.value);
   }
 
-  async handleAprobal() {
-    await this.aprobalCrates(NFT_CONTRACT_ADDRESS, NFT_ABI,this.textInput.value);
+  async handleWL() {
+    await this.mintAllowList(NFT_CONTRACT_ADDRESS, NFT_ABI,this.textInput.value);
   }
 
-  async handleClaim() {
-    await this.claimCreds(NFT_CONTRACT_ADDRESS, NFT_ABI,this.textInput.value);
+  async handleFree() {
+    await this.mintFreeList(NFT_CONTRACT_ADDRESS, NFT_ABI,this.textInput.value);
   }
 
 
@@ -1200,12 +733,6 @@ class ClaimButtons extends React.Component {
     this.nftContract = new this.web3.eth.Contract(
       NFT_ABI,
       NFT_CONTRACT_ADDRESS,
-      { gasLimit: "1000000" }
-    );
-
-    this.cratesContract = new this.web3.eth.Contract(
-      CRATES_ABI,
-      CRATES_CONTRACT_ADDRESS,
       { gasLimit: "1000000" }
     );
 
@@ -1287,7 +814,7 @@ class ClaimButtons extends React.Component {
   }
 
 
-  buyCrates = (contractAddress, contractABI, numPurchase) => {
+  getSuperNovas = (contractAddress, contractABI, numPurchase) => {
 
    
 
@@ -1299,33 +826,33 @@ class ClaimButtons extends React.Component {
       return;
     }
     numPurchase=parseInt(numPurchase);
-
+	const amount = Web3.utils.toBN('40000000000000000')*numPurchase;
 
     this.setState({
       isSendingTransaction: true,
     });
 
   
-      const encodedAdoptFunction = this.cratesContract.methods.mint(numPurchase).encodeABI();
+      const encodedAdoptFunction = this.nftContract.methods.getSuperNovas(numPurchase).encodeABI();
 
       const transactionOptions = {
         from: account,
         to: contractAddress,
         data: encodedAdoptFunction,
-        value: 0,
+        value: amount,
       };
       this.web3.eth.sendTransaction(transactionOptions, (err, transactionId) => {
         if  (err) {
-          console.log('Crates mint failed', err)
+          console.log('SuperNovas mint failed', err)
           this.setState({
             isSendingTransaction: false,
-            statusString: "Crates mint failed!"
+            statusString: "SuperNovas mint failed!"
           });
         } else {
           console.log('Payment successful', transactionId);
           this.setState({
             isSendingTransaction: false,
-            statusString: "Crates mint successful! Please check Metamask for details and refresh when its done."
+            statusString: "SuperNovas mint successful! Please check Metamask for details and refresh when its done."
           });
         }
       }).on("confirmation", (confirmationNumber, receipt) => {
@@ -1341,16 +868,9 @@ class ClaimButtons extends React.Component {
 
 
 
-
-
-
-
-
-
-
   
 
-  aprobalCrates = (contractAddress, contractABI, numPurchase) => {
+  mintAllowList = (contractAddress, contractABI, numPurchase) => {
 
    
 
@@ -1362,43 +882,44 @@ class ClaimButtons extends React.Component {
       return;
     }
     numPurchase=parseInt(numPurchase);
-    if (numPurchase > 20 || numPurchase < 1) {
-      return;
-    }
+	const amount = Web3.utils.toBN('30000000000000000')*numPurchase;
 
     this.setState({
       isSendingTransaction: true,
     });
 
-      const amount = Web3.utils.toBN('77000000000000000000000000');
-      const encodedAdoptFunction = this.nftContract.methods.approve(CRATES_CONTRACT_ADDRESS,amount).encodeABI();
+  
+      const encodedAdoptFunction = this.nftContract.methods.mintAllowList(numPurchase).encodeABI();
 
       const transactionOptions = {
         from: account,
         to: contractAddress,
         data: encodedAdoptFunction,
-        value: 0,
+        value: amount,
       };
       this.web3.eth.sendTransaction(transactionOptions, (err, transactionId) => {
         if  (err) {
-          console.log('approve failed', err)
+          console.log('SuperNovas mint failed', err)
           this.setState({
             isSendingTransaction: false,
-            statusString: "Payment failed!"
+            statusString: "SuperNovas mint failed!"
           });
         } else {
-          console.log('approve successful', transactionId)
+          console.log('Payment successful', transactionId);
           this.setState({
             isSendingTransaction: false,
-            statusString: "approve successful!."
+            statusString: "SuperNovas mint successful! Please check Metamask for details and refresh when its done."
           });
-          
         }
-      });
+      }).on("confirmation", (confirmationNumber, receipt) => {
+          console.log("on confirmation", confirmationNumber);
+          window.location.reload(false);
 
+      });
+   
   }
 
-  claimCreds = (contractAddress, contractABI) => {
+  mintFreeList = (contractAddress, contractABI) => {
 
    
 
@@ -1406,16 +927,17 @@ class ClaimButtons extends React.Component {
 
     if (account === null) {
       console.log('no account detected');
+      this.connect();
       return;
     }
- 
+
 
     this.setState({
       isSendingTransaction: true,
     });
 
-    this.nftContract.methods.totalAvailable(this.state.currentAccount).call().then((unitPrice) => {
-      const encodedAdoptFunction = this.nftContract.methods.claim().encodeABI();
+  
+      const encodedAdoptFunction = this.nftContract.methods.mintFreeList().encodeABI();
 
       const transactionOptions = {
         from: account,
@@ -1425,58 +947,76 @@ class ClaimButtons extends React.Component {
       };
       this.web3.eth.sendTransaction(transactionOptions, (err, transactionId) => {
         if  (err) {
-          console.log('Payment failed', err)
+          console.log('SuperNovas mint failed', err)
           this.setState({
             isSendingTransaction: false,
-            statusString: "Transaction failed!"
+            statusString: "SuperNovas mint failed!"
           });
         } else {
-          console.log('Payment successful', transactionId)
+          console.log('Payment successful', transactionId);
           this.setState({
             isSendingTransaction: false,
-            statusString: "Claim successful! Please check Metamask for details and refresh when its done."
+            statusString: "SuperNovas mint successful! Please check Metamask for details and refresh when its done."
           });
         }
+      }).on("confirmation", (confirmationNumber, receipt) => {
+          console.log("on confirmation", confirmationNumber);
+          window.location.reload(false);
+
       });
-    });
+   
   }
 
 
   updateInitialStates = () => { 
-    this.updateTotalAllowance();
+    this.updatenumFreeMint();
+	this.updatenumWLMint();
     this.updateHasSaleStarted();
-    this.updateIsAuthClaim();
+	this.updateHasPrivateSaleStarted();
+	this.updateMinted();
   }
 
-  updateTotalAllowance = () => {
-    console.log("called totalAllowance");
-    this.nftContract.methods.allowance(this.state.currentAccount,CRATES_CONTRACT_ADDRESS).call().then((totalAllowance) => {
-      totalAllowance = parseInt(Web3.utils.fromWei(totalAllowance, 'ether'));
+  updatenumWLMint = () => {
+    console.log("called numAllowMint");
+    this.nftContract.methods.numAllowMint(this.state.currentAccount).call().then((numAllowMint) => {
       this.setState({
-        totalAllowance: totalAllowance,
+        numAllowMint: numAllowMint,
+      });
+    });
+  }
+
+  updatenumFreeMint = () => {
+    console.log("called numFreeMint");
+    this.nftContract.methods.numFreeMint(this.state.currentAccount).call().then((numFreeMint) => {
+      this.setState({
+        numFreeMint: numFreeMint,
       });
     });
   }
 
   updateHasSaleStarted = () => {
-    this.nftContract.methods.saleIsActive().call().then((hasSaleStarted) => {
+    this.nftContract.methods.hasSaleStarted().call().then((hasSaleStarted) => {
       this.setState({
         hasSaleStarted: hasSaleStarted
       });
     });
   }
-
-  updateIsAuthClaim = () => {
-    this.nftContract.methods.totalAvailable(this.state.currentAccount).call().then((isAuthClaim) => {
-      const credsAvaliable = Web3.utils.fromWei(isAuthClaim, 'ether');
-      console.log(credsAvaliable);
+  
+  updateHasPrivateSaleStarted = () => {
+    this.nftContract.methods.hasPrivateSaleStarted().call().then((hasPrivateSaleStarted) => {
       this.setState({
-        isAuthClaim: credsAvaliable
+        hasPrivateSaleStarted: hasPrivateSaleStarted
       });
     });
   }
 
-
+  updateMinted = () => {
+    this.nftContract.methods.minted().call().then((minted) => {
+      this.setState({
+        minted: minted
+      });
+    });
+  }
 
 
   updateInput(evt){
@@ -1496,27 +1036,35 @@ class ClaimButtons extends React.Component {
                        <Fab style={style} variant="extended" onClick={() => this.connect()}>
                            <b>Connect metamask</b>
                        </Fab>
-
                  }
              </div>
         </div>
         <div className="App" >
+
+		<h1 style={{color: '#FFFFFF'}}><br/><br/>Mint SuperNovas</h1>
     
           <form noValidate autoComplete="off">
-             
-        
-              {this.state.totalAllowance > 0 ? (
-                  <Button style={styleBuy} variant="contained" size="large" onClick={() => this.handleClick()}><b>Mint Supernovas</b></Button>
-                 ) :
-                  <div><br/>
-                  <Button style={styleBuy} variant="contained" size="large" onClick={() => this.handleClick()}><b>Mint SuperNovas</b></Button>&nbsp;
-				  <TextField style={{maxWidth: "100px"}} inputProps={{ style: { color: "#fff", display: "none" } }} variant="filled" onChange={this.updateInput} defaultValue={this.state.defaultValue}  margin="dense" size="small" requiered="true" type="number"/>
-                  </div>
-              } 
+		       <TextField style={{maxWidth: "100px"}} inputProps={{ style: { background: "#fff", marginBottom: "20px"}, min: 0, max: 10 }} variant="filled" onChange={this.updateInput} defaultValue={this.state.defaultValue}  margin="dense" size="small" requiered="true" type="number" max="10" min="0"/>&nbsp;<br/>
+                {this.state.hasSaleStarted &&
+                  <Button style={styleBuy} variant="contained" size="large" onClick={() => this.handleClick()}><b>Public Mint</b></Button>
+                } 
+				&nbsp;
+				{this.state.hasPrivateSaleStarted && this.state.numAllowMint > 0 &&
+                  <Button style={styleBuy} variant="contained" size="large" onClick={() => this.handleWL()}><b>WL Mint</b></Button>
+                } 
+				{this.state.hasPrivateSaleStarted && this.state.numFreeMint > 0  &&
+                   <div> <br/><br/><Button style={styleBuy} variant="contained" size="large" onClick={() => this.handleFree()}><b>Free Mint</b></Button></div>
+                } 
+				
+				
+				 
+				 
 			  <br/><br/>
             
               
           </form>
+
+		  <div className="Peque"><b style={{color: '#f17123',}}>{this.state.minted}/3333 Minted</b><br/><br/></div>
 
         </div>
       </div>
