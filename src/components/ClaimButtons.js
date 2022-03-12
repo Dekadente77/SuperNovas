@@ -1044,7 +1044,7 @@ class ClaimButtons extends React.Component {
 		<h1 style={{color: '#FFFFFF'}}><br/><br/>Mint SuperNovas</h1>
     
           <form noValidate autoComplete="off">
-		       <TextField style={{maxWidth: "100px"}} inputProps={{ style: { background: "#fff", marginBottom: "20px"}, min: 0, max: 10 }} variant="filled" onChange={this.updateInput} defaultValue={this.state.defaultValue}  margin="dense" size="small" requiered="true" type="number" max="10" min="0"/>&nbsp;<br/>
+		       <TextField style={{maxWidth: "100px"}} inputProps={{ style: { background: "#fff", marginBottom: "20px"}, min: 1, max: 10 }} variant="filled" onChange={this.updateInput} defaultValue={this.state.defaultValue}  margin="dense" size="small" requiered="true" type="number" max="10" min="0"/>&nbsp;<br/>
                 {this.state.hasSaleStarted &&
                   <Button style={styleBuy} variant="contained" size="large" onClick={() => this.handleClick()}><b>Public Mint</b></Button>
                 } 
